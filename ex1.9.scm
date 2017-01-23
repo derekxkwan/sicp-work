@@ -1,5 +1,13 @@
 #! /usr/bin/guile-2.0 -s
 !#
+
+; since there's no inc or dec
+(define (inc a)
+  (+ a 1))
+
+(define (dec a)
+  (- a 1))
+
 ;--recursive
 (+ 2 5)
 (inc (+ (dec 2) 5))
