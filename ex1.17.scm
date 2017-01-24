@@ -1,4 +1,4 @@
-#! /usr/bin/guile-2.0  --no-auto-compile -s 
+#! /usr/bin/guile-2.0  --no-auto-compile 
 !#
 
 

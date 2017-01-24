@@ -1,4 +1,4 @@
-#! /usr/bin/guile-2.0 -s --no-auto-compile
+#! /usr/bin/guile-2.0 --no-auto-compile
 !#
 
 ;--- b = base, n = exponent
