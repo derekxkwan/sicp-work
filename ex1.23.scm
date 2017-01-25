@@ -5,10 +5,13 @@
 (define (divides? a b) (= (remainder b a) 0 ))
 (define (even? x) (= (remainder x 2) 0))
 
+;here is our modified procedure with "next"
+
 (define (find-divisor n test-divisor)
+  (define (next n) (if (= n 2) 3 (+ n 2)))
   (cond ((> (square test-divisor) n ) n)
         ((divides? test-divisor n) test-divisor)
-        (else (find-divisor n (+ test-divisor 1)))))
+        (else (find-divisor n (next test-divisor)))))
 
 (define (smallest-divisor n) (find-divisor n 2))
 
