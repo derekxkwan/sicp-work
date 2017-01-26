@@ -1,3 +1,3 @@
 # sicp-work
 
-some of the work on 'Structure and Interpretation of Computer Programs' myself hadzt werked uponn whillzzt reading through the text
+Some work I've been doing going through the famed "Structure and Interpretation of Computer Programs". All exercises are written in Guile Scheme (so far...).
