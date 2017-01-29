@@ -16,5 +16,6 @@
   (lambda (x) (/ (+ (f (- x dx)) (f x) (f (+ x dx))) 3.0))
   )
 
+; ((repeated (smooth f)) n) composes the smoothed function with itself, which we don't want
 (define (smooth-rpt f n)
   ((repeated smooth n) f))
