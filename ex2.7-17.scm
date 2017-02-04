@@ -24,6 +24,13 @@
                                (/ 1.0 (lower-bound y)))
                 ))
 
+(define (make-center-width c w)
+  (make-interval (- c w) (+ c w)))
+
+(define (center i)
+  (/ (+ (lower-bound i) (upper-bound i)) 2))
+
+
 ;ex 2.7
 (define (lower-bound intv) (car intv))
 (define (upper-bound intv) (cdr intv))
@@ -154,3 +161,13 @@
               (make-interval (* uX uY) (* lX lY)))
             )))
 
+; ex 2.12
+
+(define (make-center-percent c p-tol)
+  (let ((w (* c (/ p-tol 100.0))))
+    (make-interval (- c w) (+ c w))))
+
+(define (percent i)
+  (let ((c (/ (+ (upper-bound i) (lower-bound i)) 2))
+        (w (/ (- (upper-bound i) (lower-bound i)) 2)))
+    (* (/ w c) 100.0)))
