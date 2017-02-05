@@ -90,12 +90,10 @@
 ;ex2.10
 
 (define (div-interval x y)
-  (if(= (* (lower-bound y) (upper-bound y)) 0) (error "DIV0!\n") (
-    (mul-interval x 
-                (make-interval (/ 1.0 (upper-bound y))
-                               (/ 1.0 (lower-bound y)))
-                ))
-    ))
+  (let ((lY (lower-bound y)) (uY (upper-bound y)))
+  (if(<= (* lY uY) 0) (error "DIV0!" y) 
+    (mul-interval x (make-interval (/ 1.0 uY) (/ 1.0 lY)))
+                       )))
 
 ;ex2.11
 
@@ -110,8 +108,8 @@
 ; 8 (-,+) * (-,-)
 ; 9 (-,-) * (-, -)
 (define (mul-interval x y)
-  (define (posi? x) (>= x 0))
-  (define (negi? x) (< x 0))
+  (define (posi? z) (>= z 0))
+  (define (negi? z) (< z 0))
     (let ((lX (lower-bound x))
           (uX (upper-bound x))
           (lY (lower-bound y))
@@ -161,6 +159,7 @@
               (make-interval (* uX uY) (* lX lY)))
             )))
 
+
 ; ex 2.12
 
 (define (make-center-percent c p-tol)
@@ -171,3 +170,42 @@
   (let ((c (/ (+ (upper-bound i) (lower-bound i)) 2))
         (w (/ (- (upper-bound i) (lower-bound i)) 2)))
     (* (/ w c) 100.0)))
+
+; ex 2.13
+
+;let i1 = (a,b), i2 = (c,d) and a,b,c,d>0. Then i1*i2 = (a*c,b*d)
+;as in case 1 of our multiplying algo. in terms of widths.
+;i1 = (a,b)= (c1-w1,c1+w1), likewise for i2
+;i1*i2=((c1-w1)*(c2-w2), (c1+w1)*(c2+w2))
+;a*c=c1*c2-(c1*w2)-(c2*w1)+(w1*w2)
+;b*d=c1*c2+(c1*w2)+(c2*w1)+(w1*w2)
+;given that w1 and w2 are small, w1*w2 is even smaller -> drops out
+;i1*i2=(c1*c2-((c1*w2)+(c2*w1)),c1*c2+((c1*w2)+(c2*w1)))
+;c12 = c1*c2, w12 = (c1*w2)+(c2*w1)
+;since w = c*t/100, where t is percent tolerance
+;w12 = (c1*(c2*t2)/100)+(c2*(c1*t1)/100)
+;w12 = (c1*c2)((t1+t2)/100)
+;so for i12, since c12 = c1*c2, then t12 = t1+t2
+
+; ex 2.14
+
+(define a (make-center-percent 100 10))
+(define b (make-center-percent 200 25))
+(define c (make-center-percent 400 50))
+(define aa (div-interval a a))
+(define ab (div-interval a b))
+(define bb (div-interval b b))
+(define bc (div-interval b c))
+(define cc (div-interval c c))
+(define ac (div-interval a c))
+
+(display "ex 2.14\n")
+
+(display "a,b,c: ")(display a)(display ", ")
+(display b)(display ", ")(display c)(newline)
+
+(display "aa,bb,cc: ")(display aa)(display ", ")
+(display bb)(display ", ")(display cc)(newline)
+
+(display "ab,bc,ac: ")(display ab)(display ", ")
+(display bc)(display ", ")(display ac)(newline)
