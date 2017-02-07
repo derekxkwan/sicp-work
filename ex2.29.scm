@@ -53,3 +53,7 @@
            (is-balanced? bL)
            (is-balanced? bR)))
     ))
+
+;d 
+
+;if the lists changed to cons, all we would need to change are the setters (obv) and getters
