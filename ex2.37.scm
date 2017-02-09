@@ -1,7 +1,6 @@
 #! /usr/bin/guile-2.0 --no-auto-compile
 !#
 
-; note that accumulate is iterative 
 (define (accumulate op initial sequence)
   (if (null? sequence)
     initial
