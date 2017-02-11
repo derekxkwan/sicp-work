@@ -21,12 +21,14 @@
 
 (define (queens board-size)
   (define empty-board #nil)
-  (define (adjoin-position row col positions)
-    (append (list row col) positions))
+  (define (new-queen row col)
+    (cons row col))
+  (define (adjoin-position row col rest)
+    (cons (new-queen row col) rest))
   (define (row-val position)
     (car position))
   (define (col-val position)
-    (cadr position))
+    (cdr position))
   ;safe positions are the ones which do not share a col or row
   ;with other queens and can't be reached by their (+ ix posx)
   ; (+iy posy)
@@ -37,11 +39,13 @@
       (= (abs (- (row-val q2) (row-val q1)))
          (abs (- (col-val q2) (col-val q1))))
       )
+    (define (attackable? q1 q2)
+      (or (same-diag? q1 q2)
+          (= (row-val q1) (row-val q2))
+          (= (col-val q1) (col-val q2))))
     (define (safe-iter new-q others)
       (cond ((null? others) #t)
-            ((= (row-val cur) (row-val (car others))) #f) ; rows same
-            ((= (col-val cur) (col-val (car others))) #f) ; cols same
-            ((same-diag? cur (car rest)) #f)
+            ((attackable? new-q (car others)) #f)
             (else (safe-iter new-q (cdr others)))
             ))
     ; (car positions) = new queen
@@ -54,8 +58,8 @@
                          (map (lambda (new-row)
                                 (adjoin-position new-row k rest-of-queens))
                               (enumerate-interval 1 board-size)))
-                       (queens-cols (- k 1))))))
-  (queens-cols board-size))
+                       (queen-cols (- k 1))))))
+  (queen-cols board-size))
 
 ; ex2.43
 
