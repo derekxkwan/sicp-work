@@ -36,7 +36,8 @@
   (caddr frame))
 
 ;version 2
-
+#|
+;apparently racket doesn't like redefining things so i've commented it out
 (define (make-frame origin edge1 edge2)
   (cons origin (cons edge1 edge2)))
 
@@ -48,3 +49,47 @@
 
 (define (frame-edge2 frame)
   (cddr frame))
+
+;2.48
+
+(define (make-segment v1 v2)
+  (cons v1 v2))
+
+(define (start-segment seg)
+  (car v1))
+
+(define (end-segment seg)
+  (cdr v1))
+|#
+;2.49
+
+;2.49a:outline
+
+;note that this doesn't seem to draw the 2nd and third vectors, i'm assuming they
+;got clipped off
+(define outline-list
+  (list (make-segment (make-vect 0 0) (make-vect 0 1))
+        (make-segment (make-vect 0 1) (make-vect 1 1))
+        (make-segment (make-vect 1 1) (make-vect 1 0))
+        (make-segment (make-vect 1 0) (make-vect 0 0))))
+
+(paint (segments->painter outline-list))
+
+;b
+(define x-list
+  (list (make-segment (make-vect 0 0) (make-vect 1 1))
+        (make-segment (make-vect 1 0) (make-vect 0 1))))
+
+(paint (segments->painter x-list))
+
+;c
+(define diamond-list
+  (list (make-segment (make-vect 0 0.5) (make-vect 0.5 1))
+        (make-segment (make-vect 0.5 1) (make-vect 1 0.5))
+        (make-segment (make-vect 1 0.5) (make-vect 0.5 0))
+        (make-segment (make-vect 0.5 0) (make-vect 0 0.5))))
+
+(paint (segments->painter diamond-list))
+
+;d well, i get the point of the exercise, the wave painter looks a little too involved
+
