@@ -93,3 +93,36 @@
 ;d basically switch the order of the put args so it's like so:
 ; (put '+ 'deriv deriv-sum)
 
+;2.74
+;a - file is the division's personnel file, want to get the specified
+;employee's record so the division and employee name need to be supplied
+;it's like this: (div x -> '((bob '(address "tippy toes st") '(salary 5000)) '(steve ....... ))
+;get-record returns this (or the particular divison's version of it)
+;the get table type should be the division name
+
+;returns empty list if record not found
+(define (get-record employee divison)
+  (let ((record (get 'get-record division) employee))
+    (if (or (null? record) (eq? record #f)) '() record)))
+
+;b
+
+(define (get-salary record division)
+  (let ((record (get-record employee division)))
+    ((get 'get-salary division) record)))
+
+;c
+
+(define (find-employee-record name div-list)
+  (define (fer-iter parse results)
+    (if (pair? parse) results
+      (let ((return (get-record employee (car div-list)))
+            (rest (cdr parse)))
+        ;empty list
+        (if (null? return) (fer-iter rest results)
+          (fer-iter rest (append (list return) results)))
+        )))
+  (fer-iter div-list '()))
+
+;d - give the new company a division name, put their methods for get-record
+; and get-salary in the table
