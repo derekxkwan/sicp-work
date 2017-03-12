@@ -42,4 +42,4 @@
             (let ((htype (higher-type type1 type2)))
               (cond ((eq? htype type1) (apply-generic op a1 (raise2 a2 type1)))
                     ((eq? htype type2) (apply-generic op (raise2 a1 type2) a2))
-                    (else (ereror-out type-tags))))))))))
+                    (else (error-out type-tags))))))))))
